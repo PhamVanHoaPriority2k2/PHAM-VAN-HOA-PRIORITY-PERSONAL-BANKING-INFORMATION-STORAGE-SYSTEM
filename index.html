@@ -1,234 +1,276 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="dark">
+<html lang="vi" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHẠM VĂN HOÀ PRIORITY - AI BANKING SYSTEM</title>
-    <style>
-        :root {
-            --bg-overlay: rgba(0, 0, 0, 0.7);
-            --bg-card: rgba(28, 28, 30, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --text-main: #ffffff;
-            --text-sub: #ebebf5;
-            --primary: #00BC3C;
-            --danger: #ff3b30;
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHẠM VĂN HOÀ PRIORITY - PERSONAL BANKING</title>
+    <style>
+        :root {
+            --bg-body: #f2f2f7;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-main: #000000;
+            --text-sub: #3a3a3c;
+            --primary: #00BC3C;
+            --danger: #ff3b30;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            --input-bg: rgba(142,142,147,0.15);
+        }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; }
-        
-        body { 
-            background: url('https://swisscognitive.ch/wp-content/uploads/2021/07/AI-in-Banking-and-Insurance.jpg') no-repeat center center fixed; 
-            background-size: cover;
-            color: var(--text-main); 
-            transition: 0.4s; 
-            padding: 20px; 
-            min-height: 100vh;
-            position: relative;
-        }
+        [data-theme="dark"] {
+            --bg-body: #000000;
+            --bg-card: rgba(28, 28, 30, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-sub: #ebebf5;
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            --input-bg: rgba(255,255,255,0.1);
+        }
 
-        body::before {
-            content: "";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-overlay);
-            z-index: -1;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; }
+        body { background: var(--bg-body); color: var(--text-main); transition: 0.4s; padding: 20px; min-height: 100vh; }
 
-        /* --- HEADER --- */
-        .header { max-width: 1200px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-        .brand-container { display: flex; align-items: center; gap: 15px; }
-        .nca-logo-top { width: 50px; height: auto; border-radius: 8px; filter: drop-shadow(0 0 5px var(--primary)); }
-        .brand-title { font-size: 15px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
-        
-        .controls { display: flex; align-items: center; gap: 12px; }
+        /* --- HEADER --- */
+        .header { max-width: 1200px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .brand-container { display: flex; align-items: center; gap: 15px; max-width: 75%; }
+        .nca-logo-top { width: 50px; height: auto; object-fit: contain; border-radius: 8px; }
+        .brand-title { font-size: 15px; line-height: 1.4; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+        .brand-title span { font-weight: 900; }
+        
+        .controls { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+        .theme-toggle-btn {
+            background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 50%;
+            width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            color: var(--text-main); backdrop-filter: blur(10px); box-shadow: var(--shadow);
+        }
 
-        /* --- GRID & CARDS --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .card { 
-            background: var(--bg-card); backdrop-filter: blur(15px); border-radius: 24px; padding: 22px; 
-            border: 1px solid var(--glass-border); box-shadow: var(--shadow);
-            display: flex; flex-direction: column; position: relative; overflow: hidden; animation: fadeIn 0.3s ease;
-        }
+        /* --- FIX SELECT DARK MODE --- */
+        select { background: var(--input-bg); color: var(--text-main); border: 1px solid var(--glass-border); appearance: none; padding-right: 30px !important; }
+        [data-theme="dark"] select option { background-color: #1c1c1e !important; color: #ffffff !important; }
+        [data-theme="light"] select option { background-color: #ffffff !important; color: #000000 !important; }
 
-        /* Hình chìm mờ cho card */
-        .card::after {
-            content: "";
-            position: absolute; bottom: -10px; right: -10px;
-            width: 120px; height: 120px;
-            background: url('https://vstatic.vietnam.vn/vietnam/resource/IMAGE/2026/01/07/1767758658971_172beb44d40c45e995106a5f7ee63eee20260107085748.png') no-repeat center;
-            background-size: contain;
-            opacity: 0.12;
-            z-index: 0;
-            pointer-events: none;
-        }
+        /* --- GRID & CARDS --- */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .card { 
+            background: var(--bg-card); backdrop-filter: blur(20px); border-radius: 24px; padding: 22px; 
+            border: 1px solid var(--glass-border); box-shadow: var(--shadow);
+            display: flex; flex-direction: column; animation: fadeIn 0.3s ease;
+        }
 
-        .info-item { margin-bottom: 15px; position: relative; z-index: 1; }
-        .label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-        .label { font-size: 11px; color: var(--text-sub); text-transform: uppercase; opacity: 0.7; }
-        .value { font-size: 17px; display: flex; align-items: center; }
-        .val-stk { color: var(--primary); font-family: 'SF Mono', monospace; font-size: 19px; }
+        .info-item { margin-bottom: 15px; }
+        .label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .label { font-size: 11px; color: var(--text-sub); text-transform: uppercase; opacity: 0.8; }
+        .value { font-size: 17px; color: var(--text-main); display: flex; align-items: center; }
+        .val-stk { color: var(--primary); font-family: 'SF Mono', monospace; font-size: 19px; }
 
-        .btn-copy { 
-            background: rgba(0, 188, 60, 0.2); color: var(--primary); padding: 5px 12px; font-size: 11px; 
-            border-radius: 8px; border: 1.5px solid var(--primary); margin-left: auto; cursor: pointer;
-        }
+        .btn-copy { 
+            background: rgba(0, 188, 60, 0.1); color: var(--primary); padding: 5px 12px; font-size: 11px; 
+            border-radius: 8px; border: 1.5px solid var(--primary); margin-left: auto; cursor: pointer;
+        }
 
-        .btn-delete {
-            background: rgba(255, 59, 48, 0.1); border: 1.5px solid var(--danger); color: var(--danger);
-            padding: 8px; border-radius: 12px; cursor: pointer; margin-top: 15px; z-index: 1;
-        }
+        .btn-delete {
+            background: none; border: 1.5px solid var(--danger); color: var(--danger);
+            padding: 8px; border-radius: 12px; cursor: pointer; margin-top: 15px; transition: 0.3s;
+        }
+        .btn-delete:hover { background: var(--danger); color: white; }
 
-        /* --- MODAL --- */
-        .modal-overlay { 
-            display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 999;
-            justify-content: center; align-items: center; 
-        }
-        .modal { 
-            background: #1c1c1e; padding: 30px; border-radius: 30px; width: 90%; max-width: 420px;
-            border: 1px solid var(--glass-border);
-        }
-        .modal input, .modal select, .modal textarea {
-            width: 100%; padding: 14px; margin-top: 8px; border-radius: 12px;
-            border: 1px solid #3a3a3c; background: #2c2c2e; color: white; outline: none;
-        }
+        /* --- MODAL --- */
+        .modal-overlay { 
+            display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); z-index: 999;
+            justify-content: center; align-items: center; 
+        }
+        .modal { 
+            background: var(--bg-card); padding: 30px; border-radius: 30px; width: 90%; max-width: 420px;
+            border: 1px solid var(--glass-border); box-shadow: var(--shadow);
+        }
+        .modal input, .modal select, .modal textarea {
+            width: 100%; padding: 14px; margin-top: 8px; border-radius: 15px;
+            border: 1px solid var(--glass-border); background: var(--input-bg); color: var(--text-main); outline: none;
+        }
+        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px; }
 
-        .footer { margin-top: 60px; text-align: center; padding: 40px; }
-        .footer-brand { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; text-transform: uppercase; opacity: 0.9; }
+        /* --- FOOTER --- */
+        .footer { margin-top: 60px; text-align: center; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .tinnhiem-img { width: 140px; cursor: pointer; }
+        .footer-brand { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; text-transform: uppercase; line-height: 1.5; max-width: 800px; }
 
-        .svg-icon { width: 22px; height: 22px; flex-shrink: 0; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+        .svg-icon-shield { width: 24px; height: 24px; flex-shrink: 0; }
+        .svg-icon-tick { width: 18px; height: 18px; flex-shrink: 0; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="brand-container">
-            <img src="https://tinnhiemmang.vn/storage/photos/shares/uploads/0-02-06-d97700c1b2311ce041221f7614d18c5fd20796a5b65aa49d9c2e4ff107da71158ecef193bfa06da1342.png" class="nca-logo-top">
-            <div class="brand-title" id="topBrand"></div>
-        </div>
-        <div class="controls">
-            <select id="langSwitch" onchange="updateUI(this.value)" style="padding: 8px; border-radius: 10px; cursor:pointer; background: #2c2c2e; color: white; border: 1px solid #3a3a3c;">
-                <option value="vn">VN</option>
-                <option value="gb">EN</option>
-            </select>
-            <button onclick="openModal()" id="btnNew" style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:12px; cursor:pointer;">+ MỚI</button>
-        </div>
-    </div>
+    <div class="header">
+        <div class="brand-container">
+            <img src="https://tinnhiemmang.vn/storage/photos/shares/uploads/0-02-06-d97700c1b2311ce041221f7614d18c5fd20796a5b65aa49d9c2e4ff107da71158ecef193bfa06da1342.png" alt="NCA Logo" class="nca-logo-top">
+            <div class="brand-title" id="topBrand"></div>
+        </div>
+        <div class="controls">
+            <select class="lang-select" onchange="updateUI(this.value)" style="padding: 8px 12px; border-radius: 12px; cursor:pointer;">
+                <option value="vn">VN</option>
+                <option value="gb">EN</option>
+            </select>
+            <button class="theme-toggle-btn" onclick="toggleTheme()">
+                <svg width="20" height="20" viewBox="0 0 19.9414 19.7349">
+                    <path d="M10.2344 19.7161C14.4922 19.7161 17.9395 17.1477 19.4727 13.8762C19.8047 13.1926 19.3652 12.7336 18.7109 12.9387C17.9883 13.1829 16.7969 13.4172 15.6934 13.4172C9.83398 13.4172 6.47461 10.0579 6.47461 4.18873C6.47461 3.08521 6.71875 1.84498 7.07031 0.956304C7.35352 0.233648 6.85547-0.205805 6.16211 0.0969294C2.65625 1.62037 0 5.20435 0 9.48169C0 15.136 4.58984 19.7161 10.2344 19.7161Z" fill="currentColor"></path>
+                </svg>
+            </button>
+            <button onclick="openModal()" id="btnNew" style="background:var(--primary); color:white; border:none; padding:12px 20px; border-radius:14px; cursor:pointer;">+ MỚI</button>
+        </div>
+    </div>
 
-    <div class="grid" id="cardContainer"></div>
+    <div class="grid" id="cardContainer"></div>
 
-    <div class="modal-overlay" id="modal">
-        <div class="modal">
-            <h2 id="modalTitle" style="text-align:center; margin-bottom: 20px;"></h2>
-            <div class="info-item"><label id="lblBank"></label><select id="inBank"></select></div>
-            <div class="info-item"><label id="lblAcc"></label><input type="text" id="inAcc"></div>
-            <div class="info-item"><label id="lblName"></label><input type="text" id="inName" style="text-transform:uppercase;"></div>
-            <div class="info-item"><label id="lblNote"></label><textarea id="inNote" rows="2"></textarea></div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
-                <button onclick="closeModal()" id="btnCancel" style="background:var(--danger); color:white; border:none; padding:12px; border-radius:12px; cursor:pointer;"></button>
-                <button onclick="saveCard()" id="btnSave" style="background:#1e7a36; color:white; border:none; padding:12px; border-radius:12px; cursor:pointer;"></button>
-            </div>
-        </div>
-    </div>
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <h2 id="modalTitle" style="text-align:center; font-weight:900; text-transform: uppercase; margin-bottom: 20px;"></h2>
+            <div class="info-item">
+                <label id="lblBank"></label>
+                <select id="inBank"></select>
+            </div>
+            <div class="info-item">
+                <label id="lblAcc"></label>
+                <input type="text" id="inAcc">
+            </div>
+            <div class="info-item">
+                <label id="lblName"></label>
+                <input type="text" id="inName" style="text-transform:uppercase;">
+            </div>
+            <div class="info-item">
+                <label id="lblNote"></label>
+                <textarea id="inNote" rows="2"></textarea>
+            </div>
+            <div class="modal-grid">
+                <button onclick="closeModal()" id="btnCancel" style="background:var(--danger); color:white; border:none; padding:14px; border-radius:15px; cursor:pointer;"></button>
+                <button onclick="saveCard()" id="btnSave" style="background:#1e7a36; color:white; border:none; padding:14px; border-radius:15px; cursor:pointer;"></button>
+            </div>
+        </div>
+    </div>
 
-    <div class="footer">
-        <img src="https://tinnhiemmang.vn/storage/photos/shares/CetificateTrust/Web_pre_nca2x.png" style="width: 130px; margin-bottom: 15px;">
-        <div class="footer-brand" id="bottomBrand"></div>
-    </div>
+    <div class="footer">
+        <a href="https://tinnhiemmang.vn" target="_blank">
+            <img src="https://tinnhiemmang.vn/storage/photos/shares/CetificateTrust/Web_pre_nca2x.png" class="tinnhiem-img">
+        </a>
+        <div class="footer-brand" id="bottomBrand"></div>
+    </div>
 
-    <script>
-        const shieldSVG = `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M11.7281 21.9137C11.8388 21.9715 11.9627 22.0009 12.0865 22C12.2103 21.999 12.3331 21.9686 12.4449 21.9097L16.0128 20.0025C17.0245 19.4631 17.8168 18.8601 18.435 18.1579C19.779 16.6282 20.5129 14.6758 20.4998 12.6626L20.4575 6.02198C20.4535 5.25711 19.9511 4.57461 19.2082 4.32652L12.5707 2.09956C12.1711 1.96424 11.7331 1.96718 11.3405 2.10643L4.72824 4.41281C3.9893 4.67071 3.496 5.35811 3.50002 6.12397L3.54231 12.7597C3.5554 14.7758 4.31448 16.7194 5.68062 18.2335C6.3048 18.9258 7.10415 19.52 8.12699 20.0505L11.7281 21.9137ZM10.7836 14.1089C10.9326 14.2521 11.1259 14.3227 11.3192 14.3207C11.5125 14.3198 11.7047 14.2472 11.8517 14.1021L15.7508 10.2581C16.0438 9.96882 16.0408 9.50401 15.7448 9.21866C15.4478 8.9333 14.9696 8.93526 14.6766 9.22454L11.3081 12.5449L9.92885 11.2191C9.63186 10.9337 9.15467 10.9367 8.8607 11.226C8.56774 11.5152 8.57076 11.98 8.86775 12.2654L10.7836 14.1089Z" fill="#00BC3C"></path></svg>`;
-        const tickSVG = `<svg class="svg-icon" viewBox="0 0 24 24"><path d="M7.75738 11.7976C7.37538 11.3986 6.74338 11.3826 6.34338 11.7646C5.94438 12.1456 5.92838 12.7786 6.31038 13.1786L9.4665 16.1912C9.6545 16.3882 9.9145 16.5002 10.1865 16.5012H10.1905C10.4615 16.5012 10.7205 16.3912 10.9085 16.1962L17.6855 9.19624C18.0695 8.79924 18.0595 8.16624 17.6625 7.78224C17.2645 7.39724 16.6315 7.40924 16.2485 7.80524L10.1955 14.0582L7.75738 11.7976ZM12.0004 2.00146C6.47738 2.00146 2.00038 6.47846 2.00038 12.0015C2.00038 17.5235 6.47738 22.0015 12.0004 22.0015C17.5234 22.0015 22.0004 17.5235 22.0004 12.0015C22.0004 6.47846 17.5234 2.00146 12.0004 2.00146Z" fill="#00BC3C"></path></svg>`;
+    <script>
+        const shieldSVG = `<svg class="svg-icon-shield" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.7281 21.9137C11.8388 21.9715 11.9627 22.0009 12.0865 22C12.2103 21.999 12.3331 21.9686 12.4449 21.9097L16.0128 20.0025C17.0245 19.4631 17.8168 18.8601 18.435 18.1579C19.779 16.6282 20.5129 14.6758 20.4998 12.6626L20.4575 6.02198C20.4535 5.25711 19.9511 4.57461 19.2082 4.32652L12.5707 2.09956C12.1711 1.96424 11.7331 1.96718 11.3405 2.10643L4.72824 4.41281C3.9893 4.67071 3.496 5.35811 3.50002 6.12397L3.54231 12.7597C3.5554 14.7758 4.31448 16.7194 5.68062 18.2335C6.3048 18.9258 7.10415 19.52 8.12699 20.0505L11.7281 21.9137ZM10.7836 14.1089C10.9326 14.2521 11.1259 14.3227 11.3192 14.3207C11.5125 14.3198 11.7047 14.2472 11.8517 14.1021L15.7508 10.2581C16.0438 9.96882 16.0408 9.50401 15.7448 9.21866C15.4478 8.9333 14.9696 8.93526 14.6766 9.22454L11.3081 12.5449L9.92885 11.2191C9.63186 10.9337 9.15467 10.9367 8.8607 11.226C8.56774 11.5152 8.57076 11.98 8.86775 12.2654L10.7836 14.1089Z" fill="#00BC3C"></path></svg>`;
+        const tickSVG = `<svg class="svg-icon-tick" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.75738 11.7976C7.37538 11.3986 6.74338 11.3826 6.34338 11.7646C5.94438 12.1456 5.92838 12.7786 6.31038 13.1786L9.4665 16.1912C9.6545 16.3882 9.9145 16.5002 10.1865 16.5012H10.1905C10.4615 16.5012 10.7205 16.3912 10.9085 16.1962L17.6855 9.19624C18.0695 8.79924 18.0595 8.16624 17.6625 7.78224C17.2645 7.39724 16.6315 7.40924 16.2485 7.80524L10.1955 14.0582L7.75738 11.7976ZM12.0004 2.00146C6.47738 2.00146 2.00038 6.47846 2.00038 12.0015C2.00038 17.5235 6.47738 22.0015 12.0004 22.0015C17.5234 22.0015 22.0004 17.5235 22.0004 12.0015C22.0004 6.47846 17.5234 2.00146 12.0004 2.00146Z" fill="#00BC3C"></path></svg>`;
 
-        // ĐỐI TƯỢNG NGÂN HÀNG SONG NGỮ
-        const bankData = [
-            { vn: "MB - Ngân hàng Quân Đội", en: "MB - Military Bank" },
-            { vn: "Vietcombank - VCB", en: "Vietcombank - VCB" },
-            { vn: "Techcombank - TCB", en: "Techcombank - TCB" },
-            { vn: "VietinBank - CTG", en: "VietinBank - CTG" },
-            { vn: "BIDV - Ngân hàng Đầu tư", en: "BIDV - Investment Bank" },
-            { vn: "Agribank - Nông nghiệp", en: "Agribank - Agriculture Bank" },
-            { vn: "ACB - Ngân hàng Á Châu", en: "ACB - Asia Commercial Bank" },
-            { vn: "TPBank - Tiên Phong Bank", en: "TPBank - Pioneer Bank" },
-            { vn: "VPBank - Thịnh Vượng", en: "VPBank - Prosperity Bank" },
-            { vn: "Sacombank - STB", en: "Sacombank - STB" },
-            { vn: "Momo - Ví điện tử", en: "Momo - E-Wallet" }
-        ];
+        // DANH SÁCH NGÂN HÀNG ĐẦY ĐỦ (THEO CHUẨN NAPAS/MBBANK)
+        const banks = [
+            "MB - Ngân hàng Quân Đội",
+            "Vietcombank - VCB",
+            "Techcombank - TCB",
+            "VietinBank - CTG",
+            "BIDV - Ngân hàng Đầu tư và Phát triển",
+            "Agribank - Ngân hàng Nông nghiệp",
+            "ACB - Ngân hàng Á Châu",
+            "TPBank - Tiên Phong Bank",
+            "VPBank - Ngân hàng Thịnh Vượng",
+            "Sacombank - STB",
+            "HDBank - Ngân hàng Phát triển Nhà TP.HCM",
+            "VIB - Ngân hàng Quốc tế",
+            "SHB - Ngân hàng Sài Gòn - Hà Nội",
+            "MSB - Ngân hàng Hàng Hải",
+            "SeABank - Ngân hàng Đông Nam Á",
+            "OCB - Ngân hàng Phương Đông",
+            "Eximbank - EIB",
+            "LIENVIETPOSTBANK - LPB",
+            "PVcomBank - Ngân hàng Đại chúng",
+            "Nam A Bank - Ngân hàng Nam Á",
+            "SCB - Ngân hàng Sài Gòn",
+            "ABBANK - Ngân hàng An Bình",
+            "Bac A Bank - Ngân hàng Bắc Á",
+            "DongA Bank - Ngân hàng Đông Á",
+            "VietBank - Ngân hàng Việt Nam Thương Tín",
+            "OceanBank - Ngân hàng Đại Dương",
+            "GPBank - Ngân hàng Dầu khí Toàn cầu",
+            "PGBank - Ngân hàng Xăng dầu Petrolimex",
+            "BaoVietBank - Ngân hàng Bảo Việt",
+            "Viet Capital Bank - Bản Việt",
+            "Kienlongbank - Ngân hàng Kiên Long",
+            "Saigonbank - Ngân hàng Sài Gòn Công Thương",
+            "VietABank - Ngân hàng Việt Á",
+            "NCB - Ngân hàng Quốc dân",
+            "Cake by VPBank",
+            "Timo - Ngân hàng số Timo",
+            "UBank by VPBank",
+            "ZaloPay - Ví điện tử",
+            "Momo - Ví điện tử",
+            "Viettel Money"
+        ];
 
-        const i18n = {
-            vn: { brand: "PHẠM VĂN HOÀ PRIORITY AI BANKING SYSTEM", add: "+ MỚI", bank: "Ngân hàng", acc: "Số tài khoản", name: "Tên tài khoản", note: "Ghi chú", cancel: "HUỶ", save: "LƯU", copy: "Sao chép", del: "Xoá", head: "Thêm Tài Khoản", prod: "PHÁT TRIỂN BỞI :" },
-            gb: { brand: "PHAM VAN HOA PRIORITY AI BANKING SYSTEM", add: "+ NEW", bank: "Bank Name", acc: "Account No.", name: "Account Name", note: "Notes", cancel: "CANCEL", save: "SAVE", copy: "Copy", del: "Delete", head: "Add Account", prod: "DEVELOPED BY :" }
-        };
+        const i18n = {
+            vn: { 
+                brand: "PHẠM VĂN HOÀ PRIORITY PERSONAL BANKING INFORMATION STORAGE SYSTEM", 
+                add: "+ MỚI", bank: "Ngân hàng", acc: "Số tài khoản", name: "Tên tài khoản", note: "Ghi chú", cancel: "HUỶ BỎ", save: "LƯU LẠI", copy: "Sao chép", del: "Xoá tài khoản", head: "Thêm Tài Khoản", prod: "HỆ THỐNG ĐƯỢC PHÁT TRIỂN BỞI :" 
+            },
+            gb: { 
+                brand: "PHAM VAN HOA PRIORITY PERSONAL BANKING INFORMATION STORAGE SYSTEM", 
+                add: "+ NEW", bank: "Bank Name", acc: "Account Number", name: "Account Name", note: "Notes", cancel: "CANCEL", save: "SAVE INFO", copy: "Copy", del: "Delete", head: "Add Account", prod: "SYSTEM DEVELOPED BY :" 
+            }
+        };
 
-        let currentLang = 'vn';
+        let currentLang = 'vn';
 
-        function updateUI(lang) {
-            currentLang = lang;
-            document.getElementById('topBrand').innerHTML = `<span>${i18n[lang].brand}</span> ${shieldSVG}`;
-            document.getElementById('bottomBrand').innerHTML = `<span>${i18n[lang].prod} ${i18n[lang].brand}</span> ${tickSVG}`;
-            document.getElementById('btnNew').innerText = i18n[lang].add;
-            document.getElementById('modalTitle').innerText = i18n[lang].head;
-            document.getElementById('lblBank').innerText = i18n[lang].bank;
-            document.getElementById('lblAcc').innerText = i18n[lang].acc;
-            document.getElementById('lblName').innerText = i18n[lang].name;
-            document.getElementById('lblNote').innerText = i18n[lang].note;
-            document.getElementById('btnCancel').innerText = i18n[lang].cancel;
-            document.getElementById('btnSave').innerText = i18n[lang].save;
+        function updateUI(lang) {
+            currentLang = lang;
+            document.getElementById('topBrand').innerHTML = `<span>${i18n[lang].brand}</span> ${shieldSVG}`;
+            document.getElementById('bottomBrand').innerHTML = `<span>${i18n[lang].prod} ${i18n[lang].brand}</span> ${tickSVG}`;
+            
+            document.getElementById('btnNew').innerText = i18n[lang].add;
+            document.getElementById('modalTitle').innerText = i18n[lang].head;
+            document.getElementById('lblBank').innerText = i18n[lang].bank;
+            document.getElementById('lblAcc').innerText = i18n[lang].acc;
+            document.getElementById('lblName').innerText = i18n[lang].name;
+            document.getElementById('lblNote').innerText = i18n[lang].note;
+            document.getElementById('btnCancel').innerText = i18n[lang].cancel;
+            document.getElementById('btnSave').innerText = i18n[lang].save;
 
-            // Cập nhật Select Bank
-            const s = document.getElementById('inBank');
-            const currentVal = s.value;
-            s.innerHTML = "";
-            bankData.forEach(item => {
-                const opt = document.createElement('option');
-                opt.value = item.vn; 
-                opt.innerText = lang === 'vn' ? item.vn : item.en;
-                s.appendChild(opt);
-            });
-            s.value = currentVal;
+            document.querySelectorAll('.card').forEach(card => {
+                card.querySelector('.l-bank').innerText = i18n[lang].bank;
+                card.querySelector('.l-acc').innerText = i18n[lang].acc;
+                card.querySelector('.l-name').innerText = i18n[lang].name;
+                card.querySelector('.btn-copy').innerText = i18n[lang].copy;
+                card.querySelector('.btn-delete').innerText = i18n[lang].del;
+            });
+        }
 
-            // Cập nhật Cards
-            document.querySelectorAll('.card').forEach(card => {
-                const bVal = card.dataset.bankVn;
-                const bankObj = bankData.find(d => d.vn === bVal);
-                card.querySelector('.v-bank').innerText = lang === 'vn' ? bankObj.vn : bankObj.en;
-                card.querySelector('.l-bank').innerText = i18n[lang].bank;
-                card.querySelector('.l-acc').innerText = i18n[lang].acc;
-                card.querySelector('.l-name').innerText = i18n[lang].name;
-                card.querySelector('.btn-copy').innerText = i18n[lang].copy;
-                card.querySelector('.btn-delete').innerText = i18n[lang].del;
-            });
-        }
+        function toggleTheme() {
+            const h = document.documentElement;
+            h.setAttribute('data-theme', h.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+        }
 
-        function openModal() { document.getElementById('modal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        function openModal() { document.getElementById('modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
-        function saveCard() {
-            const bVn = document.getElementById('inBank').value;
-            const a = document.getElementById('inAcc').value;
-            const n = document.getElementById('inName').value.toUpperCase();
-            const nt = document.getElementById('inNote').value;
-            const bankObj = bankData.find(d => d.vn === bVn);
-            
-            if(!a || !n) return;
+        function saveCard() {
+            const b = document.getElementById('inBank').value, a = document.getElementById('inAcc').value, 
+                  n = document.getElementById('inName').value.toUpperCase(), nt = document.getElementById('inNote').value;
+            if(!a || !n) return alert(currentLang === 'vn' ? "Vui lòng điền đủ!" : "Please fill all fields!");
 
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.dataset.bankVn = bVn; // Lưu gốc tiếng Việt để map ngôn ngữ
-            card.innerHTML = `
-                <div class="info-item"><div class="label-row"><span class="label l-bank">${i18n[currentLang].bank}</span>${tickSVG}</div><div class="value v-bank">${currentLang === 'vn' ? bankObj.vn : bankObj.en}</div></div>
-                <div class="info-item"><div class="label-row"><span class="label l-acc">${i18n[currentLang].acc}</span>${tickSVG}</div><div class="value val-stk">${a}<button class="btn-copy" onclick="navigator.clipboard.writeText('${a}')">${i18n[currentLang].copy}</button></div></div>
-                <div class="info-item"><div class="label-row"><span class="label l-name">${i18n[currentLang].name}</span>${tickSVG}</div><div class="value">${n}</div></div>
-                ${nt ? `<div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:10px; font-size:13px; border-left:3px solid var(--primary); z-index:1;">${nt}</div>` : ''}
-                <button class="btn-delete" onclick="this.parentElement.remove()">${i18n[currentLang].del}</button>
-            `;
-            document.getElementById('cardContainer').appendChild(card);
-            closeModal();
-        }
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="info-item"><div class="label-row"><span class="label l-bank">${i18n[currentLang].bank}</span>${tickSVG}</div><div class="value">${b}</div></div>
+                <div class="info-item"><div class="label-row"><span class="label l-acc">${i18n[currentLang].acc}</span>${tickSVG}</div><div class="value val-stk">${a}<button class="btn-copy" onclick="navigator.clipboard.writeText('${a}')">${i18n[currentLang].copy}</button></div></div>
+                <div class="info-item"><div class="label-row"><span class="label l-name">${i18n[currentLang].name}</span>${tickSVG}</div><div class="value">${n}</div></div>
+                ${nt ? `<div style="background:rgba(142,142,147,0.1); padding:10px; border-radius:12px; font-size:13px; border-left:3px solid var(--primary); margin-top:5px; font-weight:500;">${nt}</div>` : ''}
+                <button class="btn-delete" onclick="this.parentElement.remove()">${i18n[currentLang].del}</button>
+            `;
+            document.getElementById('cardContainer').appendChild(card);
+            closeModal();
+            document.getElementById('inAcc').value = ''; document.getElementById('inName').value = ''; document.getElementById('inNote').value = '';
+        }
 
-        updateUI('vn');
-    </script>
+        // TỰ ĐỘNG ĐIỀN DANH SÁCH NGÂN HÀNG
+        const s = document.getElementById('inBank');
+        banks.forEach(item => { s.innerHTML += `<option value="${item}">${item}</option>`; });
+        updateUI('vn');
+    </script>
 </body>
 </html>
