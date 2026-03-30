@@ -14,191 +14,204 @@
             --primary: #00BC3C;
             --danger: #ff3b30;
             --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-            --input-bg: rgba(142,142,147,0.15);
+            --input-bg: #ffffff;
         }
 
         [data-theme="dark"] {
-            --bg-body: #000000;
-            --bg-card: rgba(28, 28, 30, 0.9);
+            --bg-body: #1a1a1a;
+            --bg-card: rgba(40, 40, 40, 0.95);
             --glass-border: rgba(255, 255, 255, 0.1);
             --text-main: #ffffff;
             --text-sub: #ebebf5;
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-            --input-bg: rgba(255,255,255,0.1);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --input-bg: #333333;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; }
         body { background: var(--bg-body); color: var(--text-main); transition: 0.4s; padding: 20px; min-height: 100vh; }
 
-        /* --- HEADER --- */
-        .header { max-width: 1200px; margin: 0 auto 40px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-        .brand-container { display: flex; align-items: center; gap: 15px; max-width: 75%; }
-        .nca-logo-top { width: 50px; height: auto; object-fit: contain; border-radius: 8px; }
-        .brand-title { font-size: 15px; line-height: 1.4; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
-        .brand-title span { font-weight: 900; }
+        /* --- AUTH STYLES --- */
+        .auth-container { max-width: 400px; margin: 60px auto; background: var(--bg-card); padding: 35px; border-radius: 30px; border: 1px solid var(--glass-border); box-shadow: var(--shadow); text-align: center; animation: fadeIn 0.5s ease; }
+        .auth-container h2 { margin-bottom: 20px; text-transform: uppercase; font-size: 1.2rem; color: var(--primary); }
+        .field { text-align: left; margin-bottom: 15px; }
+        .field label { font-size: 0.75rem; margin-left: 5px; color: var(--text-sub); }
+        .auth-input { width: 100%; padding: 14px; margin-top: 5px; border-radius: 15px; border: 1px solid var(--glass-border); background: var(--input-bg); color: var(--text-main); outline: none; font-size: 1rem; }
+        .btn-auth { width: 100%; background: var(--primary); color: white; border: none; padding: 15px; border-radius: 15px; cursor: pointer; font-size: 1rem; margin-top: 10px; }
+        .link-auth { display: block; margin-top: 15px; font-size: 0.8rem; color: #007aff; cursor: pointer; text-decoration: underline; }
+
+        /* --- APP STYLES --- */
+        .header { max-width: 1200px; margin: 0 auto 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .brand-container { display: flex; align-items: center; gap: 12px; }
+        .nca-logo-top { width: 45px; height: auto; border-radius: 8px; }
+        .brand-title { font-size: 12px; text-transform: uppercase; max-width: 250px; line-height: 1.3; }
         
-        .controls { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-        .theme-toggle-btn {
-            background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: 50%;
-            width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            color: var(--text-main); backdrop-filter: blur(10px); box-shadow: var(--shadow);
-        }
+        .controls { display: flex; align-items: center; gap: 10px; }
+        .theme-btn { background: var(--bg-card); border: 1px solid var(--glass-border); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-main); }
 
-        /* --- FIX SELECT DARK MODE --- */
-        select { background: var(--input-bg); color: var(--text-main); border: 1px solid var(--glass-border); appearance: none; }
-        [data-theme="dark"] select option { background-color: #1c1c1e !important; color: #ffffff !important; }
-        [data-theme="light"] select option { background-color: #ffffff !important; color: #000000 !important; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .card { background: var(--bg-card); border-radius: 24px; padding: 20px; border: 1px solid var(--glass-border); box-shadow: var(--shadow); position: relative; animation: fadeIn 0.3s ease; }
+        .label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
+        .label { font-size: 10px; color: var(--text-sub); text-transform: uppercase; }
+        .value { font-size: 16px; margin-bottom: 12px; }
+        .val-stk { color: var(--primary); font-family: monospace; font-size: 18px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .btn-copy { background: rgba(0, 188, 60, 0.1); color: var(--primary); border: 1.5px solid var(--primary); padding: 4px 10px; border-radius: 8px; font-size: 10px; cursor: pointer; }
+        .btn-delete { width: 100%; background: none; border: 1px solid var(--danger); color: var(--danger); padding: 8px; border-radius: 12px; cursor: pointer; margin-top: 10px; font-size: 12px; }
 
-        /* --- GRID & CARDS --- */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .card { 
-            background: var(--bg-card); backdrop-filter: blur(20px); border-radius: 24px; padding: 22px; 
-            border: 1px solid var(--glass-border); box-shadow: var(--shadow);
-            display: flex; flex-direction: column; animation: fadeIn 0.3s ease;
-        }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); z-index: 999; justify-content: center; align-items: center; }
+        .modal { background: var(--bg-card); padding: 25px; border-radius: 25px; width: 90%; max-width: 380px; border: 1px solid var(--glass-border); }
+        .modal input, .modal select, .modal textarea { width: 100%; padding: 12px; margin: 8px 0; border-radius: 12px; border: 1px solid var(--glass-border); background: var(--input-bg); color: var(--text-main); outline: none; }
 
-        .info-item { margin-bottom: 15px; }
-        .label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-        .label { font-size: 11px; color: var(--text-sub); text-transform: uppercase; opacity: 0.8; }
-        .value { font-size: 17px; color: var(--text-main); display: flex; align-items: center; }
-        .val-stk { color: var(--primary); font-family: 'SF Mono', monospace; font-size: 19px; }
-
-        .btn-copy { 
-            background: rgba(0, 188, 60, 0.1); color: var(--primary); padding: 5px 12px; font-size: 11px; 
-            border-radius: 8px; border: 1.5px solid var(--primary); margin-left: auto; cursor: pointer;
-        }
-
-        .btn-delete {
-            background: none; border: 1.5px solid var(--danger); color: var(--danger);
-            padding: 8px; border-radius: 12px; cursor: pointer; margin-top: 15px; transition: 0.3s;
-        }
-        .btn-delete:hover { background: var(--danger); color: white; }
-
-        /* --- MODAL --- */
-        .modal-overlay { 
-            display: none; position: fixed; top:0; left:0; width:100%; height:100%; 
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); z-index: 999;
-            justify-content: center; align-items: center; 
-        }
-        .modal { 
-            background: var(--bg-card); padding: 30px; border-radius: 30px; width: 90%; max-width: 400px;
-            border: 1px solid var(--glass-border); box-shadow: var(--shadow);
-        }
-        .modal input, .modal select, .modal textarea {
-            width: 100%; padding: 14px; margin-top: 8px; border-radius: 15px;
-            border: 1px solid var(--glass-border); background: var(--input-bg); color: var(--text-main); outline: none;
-        }
-        .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px; }
-
-        /* --- FOOTER --- */
-        .footer { margin-top: 60px; text-align: center; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .tinnhiem-img { width: 140px; cursor: pointer; }
-        .footer-brand { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; text-transform: uppercase; line-height: 1.5; max-width: 800px; }
-
-        .svg-icon-shield { width: 24px; height: 24px; flex-shrink: 0; }
-        .svg-icon-tick { width: 18px; height: 18px; flex-shrink: 0; }
+        .footer { margin-top: 50px; text-align: center; padding: 30px; }
+        .tinnhiem-img { width: 120px; margin-bottom: 10px; }
+        .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="brand-container">
-            <img src="https://tinnhiemmang.vn/storage/photos/shares/uploads/0-02-06-d97700c1b2311ce041221f7614d18c5fd20796a5b65aa49d9c2e4ff107da71158ecef193bfa06da1342.png" alt="NCA Logo" class="nca-logo-top">
-            <div class="brand-title" id="topBrand"></div>
-        </div>
-        <div class="controls">
-            <select class="lang-select" onchange="updateUI(this.value)" style="padding: 8px 12px; border-radius: 12px; cursor:pointer;">
-                <option value="vn">VN</option>
-                <option value="gb">EN</option>
-            </select>
-            <button class="theme-toggle-btn" onclick="toggleTheme()">
-                <svg width="20" height="20" viewBox="0 0 19.9414 19.7349">
-                    <path d="M10.2344 19.7161C14.4922 19.7161 17.9395 17.1477 19.4727 13.8762C19.8047 13.1926 19.3652 12.7336 18.7109 12.9387C17.9883 13.1829 16.7969 13.4172 15.6934 13.4172C9.83398 13.4172 6.47461 10.0579 6.47461 4.18873C6.47461 3.08521 6.71875 1.84498 7.07031 0.956304C7.35352 0.233648 6.85547-0.205805 6.16211 0.0969294C2.65625 1.62037 0 5.20435 0 9.48169C0 15.136 4.58984 19.7161 10.2344 19.7161Z" fill="currentColor"></path>
-                </svg>
-            </button>
-            <button onclick="openModal()" id="btnNew" style="background:var(--primary); color:white; border:none; padding:12px 20px; border-radius:14px; cursor:pointer;">+ MỚI</button>
-        </div>
+    <div id="loginScreen" class="auth-container">
+        <h2>Đăng Nhập</h2>
+        <div class="field"><label>Số CCCD</label><input type="text" id="loginCCCD" class="auth-input" placeholder="12 số CCCD"></div>
+        <div class="field"><label>Mật khẩu</label><input type="password" id="loginPass" class="auth-input" placeholder="******"></div>
+        <button class="btn-auth" onclick="handleLogin()">ĐĂNG NHẬP</button>
+        <span class="link-auth" onclick="showScreen('registerScreen')">Chưa có tài khoản? Đăng ký ngay</span>
+        <span class="link-auth" onclick="showScreen('forgotScreen')">Quên mật khẩu?</span>
     </div>
 
-    <div class="grid" id="cardContainer"></div>
-
-    <div class="modal-overlay" id="modal">
-        <div class="modal">
-            <h2 id="modalTitle" style="text-align:center; font-weight:900; text-transform: uppercase; margin-bottom: 20px;"></h2>
-            <div class="info-item">
-                <label id="lblBank"></label>
-                <select id="inBank"></select>
-            </div>
-            <div class="info-item">
-                <label id="lblAcc"></label>
-                <input type="text" id="inAcc">
-            </div>
-            <div class="info-item">
-                <label id="lblName"></label>
-                <input type="text" id="inName" style="text-transform:uppercase;">
-            </div>
-            <div class="info-item">
-                <label id="lblNote"></label>
-                <textarea id="inNote" rows="2"></textarea>
-            </div>
-            <div class="modal-grid">
-                <button onclick="closeModal()" id="btnCancel" style="background:var(--danger); color:white; border:none; padding:14px; border-radius:15px; cursor:pointer;"></button>
-                <button onclick="saveCard()" id="btnSave" style="background:#1e7a36; color:white; border:none; padding:14px; border-radius:15px; cursor:pointer;"></button>
-            </div>
-        </div>
+    <div id="registerScreen" class="auth-container hidden">
+        <h2>Đăng Ký Hệ Thống</h2>
+        <div class="field"><label>Họ và Tên</label><input type="text" id="regName" class="auth-input" placeholder="NGUYỄN VĂN A"></div>
+        <div class="field"><label>Số CCCD</label><input type="text" id="regCCCD" class="auth-input" placeholder="Dùng làm tài khoản"></div>
+        <div class="field"><label>Mã ID Nhân Viên</label><input type="text" id="regID" class="auth-input" placeholder="Dùng để lấy lại mật khẩu"></div>
+        <div class="field"><label>Mật khẩu</label><input type="password" id="regPass" class="auth-input" placeholder="******"></div>
+        <button class="btn-auth" onclick="handleRegister()">TẠO TÀI KHOẢN</button>
+        <span class="link-auth" onclick="showScreen('loginScreen')">Quay lại Đăng nhập</span>
     </div>
 
-    <div class="footer">
-        <a href="https://tinnhiemmang.vn" target="_blank">
-            <img src="https://tinnhiemmang.vn/storage/photos/shares/CetificateTrust/Web_pre_nca2x.png" class="tinnhiem-img">
-        </a>
-        <div class="footer-brand" id="bottomBrand"></div>
+    <div id="forgotScreen" class="auth-container hidden">
+        <h2>Lấy Lại Mật Khẩu</h2>
+        <div class="field"><label>Số CCCD</label><input type="text" id="forgotCCCD" class="auth-input"></div>
+        <div class="field"><label>Mã ID Nhân Viên</label><input type="text" id="forgotID" class="auth-input"></div>
+        <div class="field"><label>Mật khẩu mới</label><input type="password" id="forgotNewPass" class="auth-input"></div>
+        <button class="btn-auth" style="background:var(--danger)" onclick="handleReset()">CẬP NHẬT MẬT KHẨU</button>
+        <span class="link-auth" onclick="showScreen('loginScreen')">Quay lại</span>
+    </div>
+
+    <div id="mainApp" class="hidden">
+        <div class="header">
+            <div class="brand-container">
+                <img src="https://tinnhiemmang.vn/storage/photos/shares/uploads/0-02-06-d97700c1b2311ce041221f7614d18c5fd20796a5b65aa49d9c2e4ff107da71158ecef193bfa06da1342.png" alt="NCA Logo" class="nca-logo-top">
+                <div class="brand-title" id="topBrand"></div>
+            </div>
+            <div class="controls">
+                <span id="userHello" style="font-size: 10px; color: var(--primary);"></span>
+                <select id="langSelect" onchange="updateUI(this.value)" style="padding: 5px; border-radius: 8px;">
+                    <option value="vn">VN</option>
+                    <option value="gb">EN</option>
+                </select>
+                <button class="theme-btn" onclick="toggleTheme()">🌙</button>
+                <button onclick="openModal()" id="btnNew" style="background:var(--primary); color:white; border:none; padding:10px 15px; border-radius:12px; cursor:pointer;">+ MỚI</button>
+                <button onclick="logout()" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:10px; text-decoration:underline;">Thoát</button>
+            </div>
+        </div>
+
+        <div class="grid" id="cardContainer"></div>
+
+        <div class="modal-overlay" id="modal">
+            <div class="modal">
+                <h2 id="modalTitle" style="text-align:center; font-size: 1.1rem; margin-bottom: 15px;"></h2>
+                <label id="lblBank"></label><select id="inBank"></select>
+                <label id="lblAcc"></label><input type="text" id="inAcc">
+                <label id="lblName"></label><input type="text" id="inName" style="text-transform:uppercase;">
+                <label id="lblNote"></label><textarea id="inNote" rows="2"></textarea>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
+                    <button onclick="closeModal()" id="btnCancel" style="background:var(--danger); color:white; border:none; padding:12px; border-radius:10px; cursor:pointer;"></button>
+                    <button onclick="saveCard()" id="btnSave" style="background:var(--primary); color:white; border:none; padding:12px; border-radius:10px; cursor:pointer;"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <a href="https://tinnhiemmang.vn" target="_blank"><img src="https://tinnhiemmang.vn/storage/photos/shares/CetificateTrust/Web_pre_nca2x.png" class="tinnhiem-img"></a>
+            <div id="bottomBrand" style="font-size: 10px; color: var(--text-sub); text-transform: uppercase;"></div>
+        </div>
     </div>
 
     <script>
-        // ICON KHIÊN (Sử dụng cho Tiêu đề)
-        const shieldSVG = `<svg class="svg-icon-shield" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.7281 21.9137C11.8388 21.9715 11.9627 22.0009 12.0865 22C12.2103 21.999 12.3331 21.9686 12.4449 21.9097L16.0128 20.0025C17.0245 19.4631 17.8168 18.8601 18.435 18.1579C19.779 16.6282 20.5129 14.6758 20.4998 12.6626L20.4575 6.02198C20.4535 5.25711 19.9511 4.57461 19.2082 4.32652L12.5707 2.09956C12.1711 1.96424 11.7331 1.96718 11.3405 2.10643L4.72824 4.41281C3.9893 4.67071 3.496 5.35811 3.50002 6.12397L3.54231 12.7597C3.5554 14.7758 4.31448 16.7194 5.68062 18.2335C6.3048 18.9258 7.10415 19.52 8.12699 20.0505L11.7281 21.9137ZM10.7836 14.1089C10.9326 14.2521 11.1259 14.3227 11.3192 14.3207C11.5125 14.3198 11.7047 14.2472 11.8517 14.1021L15.7508 10.2581C16.0438 9.96882 16.0408 9.50401 15.7448 9.21866C15.4478 8.9333 14.9696 8.93526 14.6766 9.22454L11.3081 12.5449L9.92885 11.2191C9.63186 10.9337 9.15467 10.9367 8.8607 11.226C8.56774 11.5152 8.57076 11.98 8.86775 12.2654L10.7836 14.1089Z" fill="#00BC3C"></path></svg>`;
+        const shieldSVG = `<svg style="width:16px;height:16px;vertical-align:middle" viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z" fill="#00BC3C"/></svg>`;
+        const tickSVG = `<svg style="width:14px;height:14px;vertical-align:middle" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#00BC3C"/></svg>`;
+        const banks = ["Vietcombank", "Techcombank", "MB Bank", "VietinBank", "BIDV", "Agribank", "ACB", "TPBank", "VPBank", "Sacombank"];
         
-        // ICON TICK TRÒN (Sử dụng cho Footer và Card - theo yêu cầu mới)
-        const tickSVG = `<svg class="svg-icon-tick" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.75738 11.7976C7.37538 11.3986 6.74338 11.3826 6.34338 11.7646C5.94438 12.1456 5.92838 12.7786 6.31038 13.1786L9.4665 16.1912C9.6545 16.3882 9.9145 16.5002 10.1865 16.5012H10.1905C10.4615 16.5012 10.7205 16.3912 10.9085 16.1962L17.6855 9.19624C18.0695 8.79924 18.0595 8.16624 17.6625 7.78224C17.2645 7.39724 16.6315 7.40924 16.2485 7.80524L10.1955 14.0582L7.75738 11.7976ZM12.0004 2.00146C6.47738 2.00146 2.00038 6.47846 2.00038 12.0015C2.00038 17.5235 6.47738 22.0015 12.0004 22.0015C17.5234 22.0015 22.0004 17.5235 22.0004 12.0015C22.0004 6.47846 17.5234 2.00146 12.0004 2.00146Z" fill="#00BC3C"></path></svg>`;
-
-        const banks = ["Vietcombank", "Techcombank", "MB Bank", "VietinBank", "BIDV", "Agribank", "ACB", "TPBank", "VPBank", "Sacombank", "VIB", "HDBank", "SHB", "MSB", "OCB", "Nam A Bank"];
-
         const i18n = {
-            vn: { 
-                brand: "PHẠM VĂN HOÀ PRIORITY PERSONAL BANKING INFORMATION STORAGE SYSTEM", 
-                add: "+ MỚI", bank: "Ngân hàng", acc: "Số tài khoản", name: "Tên tài khoản", note: "Ghi chú", cancel: "HUỶ BỎ", save: "LƯU LẠI", copy: "Sao chép", del: "Xoá tài khoản", head: "Thêm Tài Khoản", prod: "HỆ THỐNG ĐƯỢC PHÁT TRIỂN BỞI :" 
-            },
-            gb: { 
-                brand: "PHAM VAN HOA PRIORITY PERSONAL BANKING INFORMATION STORAGE SYSTEM", 
-                add: "+ NEW", bank: "Bank Name", acc: "Account Number", name: "Account Name", note: "Notes", cancel: "CANCEL", save: "SAVE INFO", copy: "Copy", del: "Delete", head: "Add Account", prod: "SYSTEM DEVELOPED BY :" 
-            }
+            vn: { brand: "HỆ THỐNG LƯU TRỮ NGÂN HÀNG CÁ NHÂN PVH", add: "+ MỚI", bank: "Ngân hàng", acc: "Số tài khoản", name: "Tên chủ thẻ", note: "Ghi chú", cancel: "HỦY", save: "LƯU", copy: "Chép", del: "Xóa tài khoản", head: "Thêm thông tin", prod: "PHÁT TRIỂN BỞI PHẠM VĂN HOÀ PRIORITY" },
+            gb: { brand: "PVH PERSONAL BANKING STORAGE SYSTEM", add: "+ NEW", bank: "Bank", acc: "Account No", name: "Card Holder", note: "Notes", cancel: "CANCEL", save: "SAVE", copy: "Copy", del: "Delete", head: "Add Information", prod: "DEVELOPED BY PHAM VAN HOA PRIORITY" }
         };
 
+        let currentCCCD = "";
         let currentLang = 'vn';
 
+        // --- HÀM CHUYỂN MÀN HÌNH ---
+        function showScreen(id) {
+            ['loginScreen', 'registerScreen', 'forgotScreen', 'mainApp'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        // --- LOGIC TÀI KHOẢN ---
+        function handleRegister() {
+            const name = document.getElementById('regName').value.trim(), cccd = document.getElementById('regCCCD').value.trim(), 
+                  id = document.getElementById('regID').value.trim(), pass = document.getElementById('regPass').value;
+            if(!name || !cccd || !id || !pass) return alert("Vui lòng nhập đủ!");
+            let users = JSON.parse(localStorage.getItem('bank_users') || "[]");
+            if(users.find(u => u.cccd === cccd)) return alert("CCCD này đã tồn tại!");
+            users.push({name, cccd, id, pass});
+            localStorage.setItem('bank_users', JSON.stringify(users));
+            alert("Đăng ký thành công!");
+            showScreen('loginScreen');
+        }
+
+        function handleLogin() {
+            const cccd = document.getElementById('loginCCCD').value.trim(), pass = document.getElementById('loginPass').value;
+            let users = JSON.parse(localStorage.getItem('bank_users') || "[]");
+            const user = users.find(u => u.cccd === cccd && u.pass === pass);
+            if(user) {
+                currentCCCD = cccd;
+                document.getElementById('userHello').innerText = "Chào, " + user.name;
+                showScreen('mainApp');
+                updateUI('vn');
+            } else { alert("Sai CCCD hoặc mật khẩu!"); }
+        }
+
+        function handleReset() {
+            const cccd = document.getElementById('forgotCCCD').value.trim(), id = document.getElementById('forgotID').value.trim(), 
+                  newPass = document.getElementById('forgotNewPass').value;
+            let users = JSON.parse(localStorage.getItem('bank_users') || "[]");
+            let idx = users.findIndex(u => u.cccd === cccd && u.id === id);
+            if(idx !== -1) {
+                users[idx].pass = newPass;
+                localStorage.setItem('bank_users', JSON.stringify(users));
+                alert("Đã đổi mật khẩu!");
+                showScreen('loginScreen');
+            } else { alert("Thông tin không khớp!"); }
+        }
+
+        function logout() { currentCCCD = ""; showScreen('loginScreen'); }
+
+        // --- LOGIC ỨNG DỤNG ---
         function updateUI(lang) {
             currentLang = lang;
-            document.getElementById('topBrand').innerHTML = `<span>${i18n[lang].brand}</span> ${shieldSVG}`;
-            document.getElementById('bottomBrand').innerHTML = `<span>${i18n[lang].prod} ${i18n[lang].brand}</span> ${tickSVG}`;
-            
-            document.getElementById('btnNew').innerText = i18n[lang].add;
-            document.getElementById('modalTitle').innerText = i18n[lang].head;
-            document.getElementById('lblBank').innerText = i18n[lang].bank;
-            document.getElementById('lblAcc').innerText = i18n[lang].acc;
-            document.getElementById('lblName').innerText = i18n[lang].name;
-            document.getElementById('lblNote').innerText = i18n[lang].note;
-            document.getElementById('btnCancel').innerText = i18n[lang].cancel;
-            document.getElementById('btnSave').innerText = i18n[lang].save;
-
-            document.querySelectorAll('.card').forEach(card => {
-                card.querySelector('.l-bank').innerText = i18n[lang].bank;
-                card.querySelector('.l-acc').innerText = i18n[lang].acc;
-                card.querySelector('.l-name').innerText = i18n[lang].name;
-                card.querySelector('.btn-copy').innerText = i18n[lang].copy;
-                card.querySelector('.btn-delete').innerText = i18n[lang].del;
-            });
+            const t = i18n[lang];
+            document.getElementById('topBrand').innerHTML = `<span>${t.brand}</span> ${shieldSVG}`;
+            document.getElementById('bottomBrand').innerHTML = `${tickSVG} ${t.prod}`;
+            document.getElementById('btnNew').innerText = t.add;
+            document.getElementById('modalTitle').innerText = t.head;
+            document.getElementById('lblBank').innerText = t.bank;
+            document.getElementById('lblAcc').innerText = t.acc;
+            document.getElementById('lblName').innerText = t.name;
+            document.getElementById('lblNote').innerText = t.note;
+            document.getElementById('btnCancel').innerText = t.cancel;
+            document.getElementById('btnSave').innerText = t.save;
+            renderCards();
         }
 
         function toggleTheme() {
@@ -212,25 +225,44 @@
         function saveCard() {
             const b = document.getElementById('inBank').value, a = document.getElementById('inAcc').value, 
                   n = document.getElementById('inName').value.toUpperCase(), nt = document.getElementById('inNote').value;
-            if(!a || !n) return alert(currentLang === 'vn' ? "Vui lòng điền đủ!" : "Please fill all fields!");
-
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
-                <div class="info-item"><div class="label-row"><span class="label l-bank">${i18n[currentLang].bank}</span>${tickSVG}</div><div class="value">${b}</div></div>
-                <div class="info-item"><div class="label-row"><span class="label l-acc">${i18n[currentLang].acc}</span>${tickSVG}</div><div class="value val-stk">${a}<button class="btn-copy" onclick="navigator.clipboard.writeText('${a}')">${i18n[currentLang].copy}</button></div></div>
-                <div class="info-item"><div class="label-row"><span class="label l-name">${i18n[currentLang].name}</span>${tickSVG}</div><div class="value">${n}</div></div>
-                ${nt ? `<div style="background:rgba(142,142,147,0.1); padding:10px; border-radius:12px; font-size:13px; border-left:3px solid var(--primary); margin-top:5px; font-weight:500;">${nt}</div>` : ''}
-                <button class="btn-delete" onclick="this.parentElement.remove()">${i18n[currentLang].del}</button>
-            `;
-            document.getElementById('cardContainer').appendChild(card);
-            closeModal();
+            if(!a || !n) return;
+            let data = JSON.parse(localStorage.getItem('cards_' + currentCCCD) || "[]");
+            data.push({b, a, n, nt});
+            localStorage.setItem('cards_' + currentCCCD, JSON.stringify(data));
+            closeModal(); renderCards();
             document.getElementById('inAcc').value = ''; document.getElementById('inName').value = ''; document.getElementById('inNote').value = '';
         }
 
+        function deleteCard(i) {
+            if(!confirm("Xóa?")) return;
+            let data = JSON.parse(localStorage.getItem('cards_' + currentCCCD) || "[]");
+            data.splice(i, 1);
+            localStorage.setItem('cards_' + currentCCCD, JSON.stringify(data));
+            renderCards();
+        }
+
+        function renderCards() {
+            const container = document.getElementById('cardContainer');
+            container.innerHTML = "";
+            let data = JSON.parse(localStorage.getItem('cards_' + currentCCCD) || "[]");
+            const t = i18n[currentLang];
+            data.forEach((item, i) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="label-row"><span class="label">${t.bank}</span>${tickSVG}</div><div class="value">${item.b}</div>
+                    <div class="label-row"><span class="label">${t.acc}</span>${tickSVG}</div>
+                    <div class="value val-stk"><span>${item.a}</span><button class="btn-copy" onclick="navigator.clipboard.writeText('${item.a}');alert('Done!')">${t.copy}</button></div>
+                    <div class="label-row"><span class="label">${t.name}</span>${tickSVG}</div><div class="value">${item.n}</div>
+                    ${item.nt ? `<div style="background:rgba(0,188,60,0.1);padding:8px;border-radius:10px;font-size:11px;margin-bottom:10px;">${item.nt}</div>` : ''}
+                    <button class="btn-delete" onclick="deleteCard(${i})">${t.del}</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
         const s = document.getElementById('inBank');
-        banks.forEach(item => { s.innerHTML += `<option value="${item}">${item}</option>`; });
-        updateUI('vn');
+        banks.forEach(b => s.innerHTML += `<option value="${b}">${b}</option>`);
     </script>
 </body>
 </html>
